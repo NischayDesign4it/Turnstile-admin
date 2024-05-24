@@ -1,0 +1,18 @@
+flutter_native_splash:
+  color: "#FFFFFF"
+  color_dark: "071390"
+  image: /Users/macos/StudioProjects/turnstile_admin/assets/images/logo-light.png
+  image_dark: /Users/macos/StudioProjects/turnstile_admin/assets/images/logo-dark.png
+  android: true
+  ios: true
+
+  android_12:
+    color: "#FFFFFF"
+    color_dark: "071390"
+    image: /Users/macos/StudioProjects/turnstile_admin/assets/images/logo-light.png
+    image_dark: /Users/macos/StudioProjects/turnstile_admin/assets/images/logo-dark.png
+    android: true
+    ios: true
+
+
+  web: false
