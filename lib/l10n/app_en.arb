@@ -56,6 +56,11 @@
   "docView": "DOCUMENTS VIEW",
   "ok": "OK",
   "pre": "Pre-Shift",
-  "tool": "ToolBox"
+  "tool": "ToolBox",
+  "enroll": "Enrolled User",
+  "active": "Active User",
+  "inactive": "Inactive User",
+  "onsite": "On-Site User",
+  "time": "TimeStamp"
 
 }

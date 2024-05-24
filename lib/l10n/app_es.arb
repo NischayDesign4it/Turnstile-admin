@@ -51,15 +51,16 @@
   "workerDetailCreate": "¡Detalles del trabajador creados exitosamente!",
   "workerDetailDelete": "¡Detalles del trabajador eliminados exitosamente!",
   "workerDetailUpdate": "¡Detalles del trabajador actualizados exitosamente!",
-
   "success": "Éxito",
   "assetCreate": "¡Activo creado exitosamente!",
   "ok": "OK",
   "docView": "VISTA DE DOCUMENTOS",
   "pre": "Pre-Turno",
-  "tool": "Caja de Herramientas"
-
-
-
+  "tool": "Caja de Herramientas",
+  "enroll": "Usuario Inscrito",
+  "active": "Usuario Activo",
+  "inactive": "Usuario Inactivo",
+  "onsite": "Usuario en el Sitio",
+  "time": "Marca de Tiempo"
 
 }
