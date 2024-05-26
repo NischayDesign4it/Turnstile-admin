@@ -61,6 +61,7 @@
   "active": "Usuario Activo",
   "inactive": "Usuario Inactivo",
   "onsite": "Usuario en el Sitio",
-  "time": "Marca de Tiempo"
+  "time": "Marca de Tiempo",
+  "numberUser": "Número de usuarios"
 
 }

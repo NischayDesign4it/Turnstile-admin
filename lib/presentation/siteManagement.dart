@@ -28,123 +28,133 @@ class _siteManagementState extends State<siteManagement> {
               MaterialPageRoute(builder: (context) => dashboardPage()));
         },
       ),
-      body: ListView(
-        children: [
-          ListTile(
-            leading: Icon(Icons.fiber_manual_record, size: 15),
-            title: Text(
-              AppLocalizations.of(context)!.usermanage,
-              style: TextStyle(fontSize: 20),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView(
+          children: [
+            ListTile(
+              leading: Icon(Icons.fiber_manual_record, size: 15),
+              title: Text(
+                AppLocalizations.of(context)!.usermanage,
+                style: TextStyle(fontSize: 20),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => workerManagement(),
+                  ),
+                );
+              },
             ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => workerManagement(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.fiber_manual_record, size: 15),
-            title: Text(
-              AppLocalizations.of(context)!.assetmanage,
-              style: TextStyle(fontSize: 20),
+            ListTile(
+              leading: Icon(Icons.fiber_manual_record, size: 15),
+              title: Text(
+                AppLocalizations.of(context)!.assetmanage,
+                style: TextStyle(fontSize: 20),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => assetManagement(),
+                  ),
+                );
+              },
             ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => assetManagement(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.fiber_manual_record, size: 15),
-            title: Text(
-              AppLocalizations.of(context)!.docView,
-              style: TextStyle(fontSize: 20),
+            ListTile(
+              leading: Icon(Icons.fiber_manual_record, size: 15),
+              title: Text(
+                AppLocalizations.of(context)!.docView,
+                style: TextStyle(fontSize: 20),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DocViewScreen(),
+                  ),
+                );
+              },
             ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DocViewScreen(),
-                ),
-              );
-            },
-          ),
-          Container(
-            color: Colors.white,
-            padding: EdgeInsets.all(20.0),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                columnSpacing: 15.0,
-                columns: [
-                  DataColumn(label: Text(AppLocalizations.of(context)!.enroll)),
-                  DataColumn(label: Text(AppLocalizations.of(context)!.active)),
-                  DataColumn(label: Text(AppLocalizations.of(context)!.inactive)),
-                  DataColumn(label: Text(AppLocalizations.of(context)!.onsite)),
-                  // DataColumn(label: Text('TimeStamp')),
-                ],
-                rows: [
-                  DataRow(cells: [
-                    DataCell(Text('Emp 1')),
-                    DataCell(Text('Emp 1')),
-                    DataCell(Text('Emp 3')),
-                    DataCell(Text('Emp 1')),
-                    // DataCell(Text('Emp 5')),
+            // Divider(),
 
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('Emp 2')),
-                    DataCell(Text('Emp 2')),
-                    DataCell(Text('-')),
-                    DataCell(Text('Emp 2')),
-                    // DataCell(Text('Emp 5')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('Emp 3')),
-                    DataCell(Text('-')),
-                    DataCell(Text('-')),
-                    DataCell(Text('-')),
-                    // DataCell(Text('Emp 5')),
-                  ]),
-                ],
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(10.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                  columnSpacing: 50.0,
+                  columns: [
+                    DataColumn(label: Text(AppLocalizations.of(context)!.workerdetail)),
+                    DataColumn(label: Text(AppLocalizations.of(context)!.numberUser)),
+                  ],
+                  rows: [
+                    DataRow(cells: [
+                      DataCell(Text(AppLocalizations.of(context)!.enroll)),
+                      DataCell(Text('             10', )),
+                    ]),
+                    DataRow(cells: [
+                      DataCell(Text(AppLocalizations.of(context)!.active)),
+                      DataCell(Text('             7', )),
+                    ]),
+                    DataRow(cells: [
+                      DataCell(Text(AppLocalizations.of(context)!.inactive)),
+                      DataCell(Text('             3', )),
+                    ]),
+                    DataRow(cells: [
+                      DataCell(Text(AppLocalizations.of(context)!.onsite)),
+                      DataCell(Text('             5', )),
+                    ]),
+
+                  ],
+                ),
               ),
             ),
-          ),
-          Container(
-            color: Colors.white,
-            padding: EdgeInsets.all(20.0),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                columnSpacing: 15.0,
-                columns: [
-                  DataColumn(label: Text(AppLocalizations.of(context)!.onsite)),
-                  DataColumn(label: Text(AppLocalizations.of(context)!.time)),
-                ],
-                rows: [
-                  DataRow(cells: [
-                    DataCell(Text('Emp 1')),
-                    DataCell(Text('2024-05-23T1:59PM')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('Emp 2')),
-                    DataCell(Text('2024-05-23T1:59PM')),
-                  ]),
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(10.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                  columnSpacing: 50.0,
+                  columns: [
+                    DataColumn(label: Text(AppLocalizations.of(context)!.onsite)),
+                    DataColumn(label: Text(AppLocalizations.of(context)!.time)),
+                  ],
+                  rows: [
+                    DataRow(cells: [
+                      DataCell(Text('Emp 1')),
+                      DataCell(Text('2024-05-24T3:56PM')),
+                    ]),
+                    DataRow(cells: [
+                      DataCell(Text('Emp 2')),
+                      DataCell(Text('2024-05-24T6:56PM')),
+                    ]),
+                    DataRow(cells: [
+                      DataCell(Text('Emp 3')),
+                      DataCell(Text('2024-05-24T1:56PM')),
+                    ]),
+                    DataRow(cells: [
+                      DataCell(Text('Emp 4')),
+                      DataCell(Text('2024-05-24T4:56PM')),
+                    ]),
+                    DataRow(cells: [
+                      DataCell(Text('Emp 5')),
+                      DataCell(Text('2024-05-24T2:56PM')),
+                    ]),
 
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
 
 
-          // Add more ListTiles as needed
-        ],
+
+            // Add more ListTiles as needed
+          ],
+        ),
       ),
     );
   }

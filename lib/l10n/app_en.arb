@@ -61,6 +61,8 @@
   "active": "Active User",
   "inactive": "Inactive User",
   "onsite": "On-Site User",
-  "time": "TimeStamp"
+  "time": "TimeStamp",
+  "numberUser": "Number of users"
+
 
 }
