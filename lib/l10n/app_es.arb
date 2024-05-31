@@ -54,7 +54,7 @@
   "success": "Éxito",
   "assetCreate": "¡Activo creado exitosamente!",
   "ok": "OK",
-  "docView": "VISTA DE DOCUMENTOS",
+  "docView": "DOCUMENTOS DE SITIOS",
   "pre": "Pre-Turno",
   "tool": "Caja de Herramientas",
   "enroll": "Usuario Inscrito",
@@ -62,6 +62,9 @@
   "inactive": "Usuario Inactivo",
   "onsite": "Usuario en el Sitio",
   "time": "Marca de Tiempo",
-  "numberUser": "Número de usuarios"
+  "numberUser": "Número de usuarios",
+  "onsite": "USUARIOS EN SITIO",
+  "date": "Seleccionar una fecha",
+  "filterName": "Filtrar por nombre"
 
 }

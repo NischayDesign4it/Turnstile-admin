@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:file_picker/file_picker.dart'; // Add this import for file picking
 
 import '../theme/AppBar.dart';
 import 'dashboardPage.dart';
-
 
 class ToolBoxScreen extends StatefulWidget {
   const ToolBoxScreen({super.key});
@@ -25,10 +25,10 @@ class _ToolBoxScreenState extends State<ToolBoxScreen> {
     super.initState();
     ToolDocLinks = [];
     selectedDate = DateTime.now(); // Initialize selectedDate with current date
-    _callPreShiftAPI(DateTime.now()); // Call API with today's date initially
+    _callToolBoxAPI(DateTime.now()); // Call API with today's date initially
   }
 
-  Future<void> _callPreShiftAPI(DateTime date) async {
+  Future<void> _callToolBoxAPI(DateTime date) async {
     setState(() {
       isLoading = true; // Set loading to true when starting to fetch data
     });
@@ -68,21 +68,40 @@ class _ToolBoxScreenState extends State<ToolBoxScreen> {
     if (pickedDate != null && pickedDate != selectedDate) {
       setState(() {
         selectedDate = pickedDate;
-        _callPreShiftAPI(selectedDate); // Call API again with selected date
+        _callToolBoxAPI(selectedDate); // Call API again with selected date
       });
+    }
+  }
+
+  Future<void> _uploadDocument() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      final file = result.files.single;
+      final uri = Uri.parse('http://54.163.33.217:8000/toolbox_api/');
+      final request = http.MultipartRequest('POST', uri)
+        ..files.add(await http.MultipartFile.fromPath('file', file.path!));
+
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        print('File uploaded successfully');
+        // Optionally, you can refresh the document list after uploading
+        _callToolBoxAPI(selectedDate);
+      } else {
+        print('Failed to upload file');
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: AppLocalizations.of(context)!.tool, backgroundColor: Color(0xff071390),
-        icon: Icons.dashboard, onPressed: (){
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.tool,
+        backgroundColor: Color(0xff071390),
+        icon: Icons.dashboard,
+        onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => dashboardPage()));
-
+              context, MaterialPageRoute(builder: (context) => dashboardPage()));
         },
       ),
       body: Padding(
@@ -91,12 +110,16 @@ class _ToolBoxScreenState extends State<ToolBoxScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(AppLocalizations.of(context)!.tool, style: TextStyle(fontSize: 20)),
+                Spacer(),
                 IconButton(
                   onPressed: () => _selectDate(context),
                   icon: Icon(Icons.calendar_today),
+                ),
+                IconButton(
+                  onPressed: _uploadDocument, // Call _uploadDocument method
+                  icon: Icon(Icons.upload),
                 ),
               ],
             ),

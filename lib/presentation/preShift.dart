@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:file_picker/file_picker.dart'; // Add this import for file picking
 
 import '../theme/AppBar.dart';
 import 'dashboardPage.dart';
-
 
 class PreShiftScreen extends StatefulWidget {
   const PreShiftScreen({Key? key}) : super(key: key);
@@ -72,30 +72,57 @@ class _PreShiftScreenState extends State<PreShiftScreen> {
     }
   }
 
+  Future<void> _uploadDocument() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      final file = result.files.single;
+      final uri = Uri.parse('http://54.163.33.217:8000/preshift_api/');
+      final request = http.MultipartRequest('POST', uri)
+        ..files.add(await http.MultipartFile.fromPath('file', file.path!));
+
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        print('File uploaded successfully');
+        // Optionally, you can refresh the document list after uploading
+        _callPreShiftAPI(selectedDate);
+      } else {
+        print('Failed to upload file');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: AppLocalizations.of(context)!.pre, backgroundColor: Color(0xff071390),
-        icon: Icons.dashboard, onPressed: (){
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.pre,
+        backgroundColor: Color(0xff071390),
+        icon: Icons.dashboard,
+        onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => dashboardPage()));
-
+              context, MaterialPageRoute(builder: (context) => dashboardPage()));
         },
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(AppLocalizations.of(context)!.pre, style: TextStyle(fontSize: 20),),
+                Text(
+                  AppLocalizations.of(context)!.pre,
+                  style: TextStyle(fontSize: 20),
+                ),
+                Spacer(),
+
                 IconButton(
                   onPressed: () => _selectDate(context),
                   icon: Icon(Icons.calendar_today),
+                ),
+                IconButton(
+                  onPressed: _uploadDocument,
+                  icon: Icon(Icons.upload),
                 ),
               ],
             ),

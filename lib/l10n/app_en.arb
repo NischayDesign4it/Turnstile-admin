@@ -53,7 +53,7 @@
 
   "success": "Success",
   "assetCreate": "Asset created successfully!",
-  "docView": "DOCUMENTS VIEW",
+  "docView": " SITES DOCUMENTS",
   "ok": "OK",
   "pre": "Pre-Shift",
   "tool": "ToolBox",
@@ -62,7 +62,11 @@
   "inactive": "Inactive User",
   "onsite": "On-Site User",
   "time": "TimeStamp",
-  "numberUser": "Number of users"
+  "numberUser": "Number of users",
+
+  "onsite": "ON-SITES USERS",
+  "date": "Select a date",
+  "filterName": "Filter by name"
 
 
 }
