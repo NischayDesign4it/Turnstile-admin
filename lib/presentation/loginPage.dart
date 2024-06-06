@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget {
 
   Future<void> loginUser(
       BuildContext context, String username, String password) async {
-    final String apiUrl = 'http://54.163.33.217:8000/login_api/';
+    final String apiUrl = 'http://44.214.230.69:8000/login_api/';
 
     try {
       final response = await http.post(

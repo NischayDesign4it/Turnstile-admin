@@ -29,7 +29,7 @@ class _ExitStatusState extends State<ExitStatus> {
       _isLoading = true;
     });
     try {
-      final response = await http.get(Uri.parse('http://54.163.33.217:8000/exits/'));
+      final response = await http.get(Uri.parse('http://44.214.230.69:8000/exits/'));
 
       if (response.statusCode == 200) {
         final List<dynamic> responseData = json.decode(response.body);

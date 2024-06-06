@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:file_picker/file_picker.dart'; // Add this import for file picking
 
 import '../theme/AppBar.dart';
 import 'dashboardPage.dart';
@@ -16,44 +17,41 @@ class ToolBoxScreen extends StatefulWidget {
 }
 
 class _ToolBoxScreenState extends State<ToolBoxScreen> {
-  late List<dynamic> ToolDocLinks;
-  late DateTime selectedDate; // Define selectedDate variable
-  bool isLoading = true; // Loading state
+  late List<dynamic> toolDocLinks;
+  late DateTime selectedDate;
+  bool isLoading = true;
+  File? _selectedFile;
 
   @override
   void initState() {
     super.initState();
-    ToolDocLinks = [];
-    selectedDate = DateTime.now(); // Initialize selectedDate with current date
-    _callToolBoxAPI(DateTime.now()); // Call API with today's date initially
+    toolDocLinks = [];
+    selectedDate = DateTime.now();
+    _callToolBoxAPI(DateTime.now());
   }
 
   Future<void> _callToolBoxAPI(DateTime date) async {
     setState(() {
-      isLoading = true; // Set loading to true when starting to fetch data
+      isLoading = true;
     });
 
-    final uri = Uri.parse('http://54.163.33.217:8000/toolbox_api/');
+    final uri = Uri.parse('http://44.214.230.69:8000/toolbox_api/');
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       final List<dynamic> responseData = jsonDecode(response.body);
 
-      // Filter documents by date
       final filteredDocs = responseData.where((doc) {
-        // Replace 'date' with the key corresponding to the date field in your JSON data
-        // Here I'm assuming 'date' is the key, you might need to replace it accordingly
         return DateTime.parse(doc['date']).isAtSameMomentAs(date);
       }).toList();
 
       setState(() {
-        ToolDocLinks = filteredDocs;
-        isLoading = false; // Set loading to false after data is fetched
+        toolDocLinks = filteredDocs;
+        isLoading = false;
       });
     } else {
-      // Handle error
       print('Failed to load data from API');
       setState(() {
-        isLoading = false; // Set loading to false if there's an error
+        isLoading = false;
       });
     }
   }
@@ -68,27 +66,89 @@ class _ToolBoxScreenState extends State<ToolBoxScreen> {
     if (pickedDate != null && pickedDate != selectedDate) {
       setState(() {
         selectedDate = pickedDate;
-        _callToolBoxAPI(selectedDate); // Call API again with selected date
+        _callToolBoxAPI(selectedDate);
       });
     }
   }
 
-  Future<void> _uploadDocument() async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      final file = result.files.single;
-      final uri = Uri.parse('http://54.163.33.217:8000/toolbox_api/');
-      final request = http.MultipartRequest('POST', uri)
-        ..files.add(await http.MultipartFile.fromPath('file', file.path!));
+  Future<void> _selectFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
 
-      final response = await request.send();
-      if (response.statusCode == 200) {
-        print('File uploaded successfully');
-        // Optionally, you can refresh the document list after uploading
-        _callToolBoxAPI(selectedDate);
-      } else {
-        print('Failed to upload file');
-      }
+    if (result != null) {
+      setState(() {
+        _selectedFile = File(result.files.single.path!);
+      });
+    }
+  }
+
+  Future<void> _uploadFile() async {
+    if (_selectedFile == null) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Upload Rejected'),
+            content: Text('Please select a file to upload.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    var url = Uri.parse('http://54.163.33.217:8000/toolbox_api/');
+    var request = http.MultipartRequest('POST', url)
+      ..files.add(await http.MultipartFile.fromPath(
+        'document',
+        _selectedFile!.path,
+      ));
+
+    var response = await request.send();
+
+    if (response.statusCode == 201) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Upload Successful'),
+            content: Text('The document has been uploaded successfully.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      _callToolBoxAPI(selectedDate);
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Upload Rejected'),
+            content: Text('Failed to upload file. Please check the format and try again.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
@@ -100,8 +160,7 @@ class _ToolBoxScreenState extends State<ToolBoxScreen> {
         backgroundColor: Color(0xff071390),
         icon: Icons.dashboard,
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => dashboardPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => dashboardPage()));
         },
       ),
       body: Padding(
@@ -118,19 +177,40 @@ class _ToolBoxScreenState extends State<ToolBoxScreen> {
                   icon: Icon(Icons.calendar_today),
                 ),
                 IconButton(
-                  onPressed: _uploadDocument, // Call _uploadDocument method
+                  onPressed: _selectFile,
                   icon: Icon(Icons.upload),
                 ),
               ],
             ),
             SizedBox(height: 20),
+            Container(
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: Colors.black,
+                  width: 1,
+                ),
+              ),
+              child: Center(
+                child: _selectedFile != null
+                    ? Text(_selectedFile!.path)
+                    : Text(AppLocalizations.of(context)!.selectionno),
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _uploadFile,
+              child: Text(AppLocalizations.of(context)!.upload),
+            ),
+            SizedBox(height: 20),
             Expanded(
               child: isLoading
-                  ? Center(child: CircularProgressIndicator()) // Show loading indicator
+                  ? Center(child: CircularProgressIndicator())
                   : ListView.builder(
-                itemCount: ToolDocLinks.length,
+                itemCount: toolDocLinks.length,
                 itemBuilder: (context, index) {
-                  final docLink = ToolDocLinks[index]['document'];
+                  final docLink = toolDocLinks[index]['document'];
                   return Image.network(
                     docLink,
                     errorBuilder: (context, error, stackTrace) {

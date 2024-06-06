@@ -53,7 +53,7 @@ class _WorkerDetailState extends State<WorkerDetail> {
       String status,
       File? file,
       ) async {
-    var url = Uri.parse('http://54.163.33.217:8000/users/');
+    var url = Uri.parse('http://44.214.230.69:8000/users/');
 
     try {
       var request = http.MultipartRequest('POST', url)
@@ -122,7 +122,7 @@ class _WorkerDetailState extends State<WorkerDetail> {
 
 
   Future<void> updateWorkerDetails() async {
-    var url = Uri.parse('http://54.163.33.217:8000/users/${tagIdController.text}/');
+    var url = Uri.parse('http://44.214.230.69:8000/users/${tagIdController.text}/');
     var headers = {'Content-Type': 'application/json'};
 
     print(tagIdController.text);
@@ -188,7 +188,7 @@ class _WorkerDetailState extends State<WorkerDetail> {
 
 
   Future<void> deleteWorkerDetails() async {
-    var url = Uri.parse('http://54.163.33.217:8000/users/${tagIdController.text}/');
+    var url = Uri.parse('http://44.214.230.69:8000/users/${tagIdController.text}/');
     var headers = {'Content-Type': 'application/json'};
 
     try {

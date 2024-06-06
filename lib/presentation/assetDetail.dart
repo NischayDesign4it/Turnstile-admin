@@ -38,7 +38,7 @@ class _AssetDetailState extends State<AssetDetail> {
       String description,
       String asset_category,
       String status) async {
-    final String apiUrl = 'http://54.163.33.217:8000/asset_api/';
+    final String apiUrl = 'http://44.214.230.69:8000/asset_api/';
 
     try {
       final response = await http.post(

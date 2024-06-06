@@ -26,7 +26,7 @@ class _assetManagementState extends State<assetManagement> {
 
   Future<void> fetchData() async {
     try {
-      final response = await http.get(Uri.parse('http://54.163.33.217:8000/get_assets_api/'));
+      final response = await http.get(Uri.parse('http://44.214.230.69:8000/get_assets_api/'));
 
       if (response.statusCode == 200) {
         final List<dynamic> responseData = json.decode(response.body);

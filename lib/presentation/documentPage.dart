@@ -49,7 +49,7 @@ class _UploadScreenState extends State<UploadScreen> {
     }
 
     // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint
-    var url = Uri.parse('http://54.163.33.217:8000/post_orientation_sheet/');
+    var url = Uri.parse('http://44.214.230.69:8000/post_orientation_sheet/');
 
     var request = http.MultipartRequest('POST', url)
       ..files.add(await http.MultipartFile.fromPath(

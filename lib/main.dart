@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turnstile_admin/controller/language_change_controller.dart';
 import 'package:turnstile_admin/presentation/dashboardPage.dart';
-import 'package:turnstile_admin/presentation/demoScreen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';

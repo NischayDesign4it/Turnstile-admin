@@ -32,8 +32,8 @@ class _DocViewScreenState extends State<DocViewScreen> {
   }
 
   Future<void> _callAPI({String? dateFilter}) async {
-    final preshiftUri = Uri.parse('http://54.163.33.217:8000/preshift_api/');
-    final toolboxUri = Uri.parse('http://54.163.33.217:8000/toolbox_api/');
+    final preshiftUri = Uri.parse('http://44.214.230.69:8000/preshift_api/');
+    final toolboxUri = Uri.parse('http://44.214.230.69:8000/toolbox_api/');
 
     final preshiftResponse = await http.get(preshiftUri);
     final toolboxResponse = await http.get(toolboxUri);

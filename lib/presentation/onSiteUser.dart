@@ -29,7 +29,7 @@ class _onSitePageState extends State<onSitePage> {
       _isLoading = true;
     });
 
-    String url = 'http://54.163.33.217:8000/get_onsite_api/';
+    String url = 'http://44.214.230.69:8000/get_onsite_api/';
     if (date != null) {
       String formattedDate = DateFormat('yyyy-MM-dd').format(date);
       url += '?date=$formattedDate';

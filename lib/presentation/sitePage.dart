@@ -27,7 +27,7 @@ class _sitePageState extends State<sitePage> {
   Future<void> fetchData() async {
     try {
       // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint
-      final response = await http.get(Uri.parse('http://54.163.33.217:8000/sites_api/'));
+      final response = await http.get(Uri.parse('http://44.214.230.69:8000/sites_api/'));
 
       if (response.statusCode == 200) {
         final List<dynamic> responseData = json.decode(response.body);

@@ -30,7 +30,7 @@ class _workerManagementState extends State<workerManagement> {
   Future<void> fetchData() async {
     try {
       final response =
-          await http.get(Uri.parse('http://54.163.33.217:8000/users/'));
+          await http.get(Uri.parse('http://44.214.230.69:8000/users/'));
 
       if (response.statusCode == 200) {
         final List<dynamic> responseData = json.decode(response.body);
